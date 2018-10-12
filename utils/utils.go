@@ -1,4 +1,4 @@
-package osutils
+package utils
 
 import (
     "bytes"
@@ -15,7 +15,7 @@ type CommandReturn struct {
 	ExitCode    int
 }
 
-func RunCommand(name string, args ...string) (result CommandReturn) {
+func RunCommand(name string, args ...string) (string, string, int) {
     log.Println("RUN COMMAND:", name, args)
     var outbuf, errbuf bytes.Buffer
     var exitCode int
@@ -49,8 +49,8 @@ func RunCommand(name string, args ...string) (result CommandReturn) {
         exitCode = ws.ExitStatus()
     }
     log.Printf("command result, stdout: %v, stderr: %v, exitCode: %v", stdout, stderr, exitCode)
-    result.Stdout = stdout
-    result.Stderr = stderr
-    result.ExitCode = exitCode
-    return
+    // result.Stdout = stdout
+    // result.Stderr = stderr
+    // result.ExitCode = exitCode
+    return stdout, stderr, exitCode
 }
