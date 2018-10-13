@@ -8,8 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
-	// "strings"
-	"path/filepath"
+    "path/filepath"
 )
 
 const defaultFailedCode = 1
@@ -51,7 +50,7 @@ type File struct {
 	Mode    os.FileMode      `json:"mode"`
     Type    string           `json:"type"`
     ModTime string          `json:"modTime"`
-    Perms   os.FileMode     `json:"perms"`
+    Perms   string     `json:"perms"`
 }
 
 /* 
@@ -133,20 +132,13 @@ func LsCommand(path string) LsCommandReturn {
 	//Maybe even a `tree` command style response would be useful
 	//and include an option to limit recurse level
 	for _, f := range flist {
-		fname := f.Name()
-		fsize := f.Size()
-		fmode := f.Mode()
         ftype := ""
-        modtime := f.ModTime()
-        
-
 		fi, err := os.Lstat(filepath.Join(path, f.Name()))
 		if err != nil {
             log.Println(err)
-            continue //skip this file
+            continue //skip this file on error
         }
-        p := fi.Mode()
-        perm := p&os.ModePerm
+        // p := fi.Mode()
 		switch mode := fi.Mode(); {
 		case mode.IsRegular():
 			ftype = "regular"
@@ -156,16 +148,17 @@ func LsCommand(path string) LsCommandReturn {
 			ftype = "sym"
 		case mode&os.ModeNamedPipe != 0:
 			ftype = "namePipe"
-		}
+        }
+
 		filesStruct.Files = append(filesStruct.Files,
-			File{Name: fname,
-				Bytes: fsize,
-				Mode:  fmode,
+			File{Name: f.Name(),
+				Bytes: f.Size(),
+				Mode:  f.Mode(),
                 Type:  ftype,
-                ModTime: modtime.String(),
-                Perms:  perm,
+                ModTime: f.ModTime().String(),
+                Perms:  fmt.Sprintf("%04o", f.Mode().Perm()),
             })
-        count ++
+        count++
 	}
 
 	return LsCommandReturn{exitCode, path, filesStruct, count, stdErr}
@@ -176,22 +169,6 @@ func LsCommand(path string) LsCommandReturn {
 		Helper funcs to the commands go here
 -----------------------------------------------------------------
 */
-
-//dirSizeBytes returns a directories size in bytes
-//note: this func is not pre-checking if the path provided is
-//a directory instead of a file
-func dirSizeBytes(path string) float64 {
-	var dirSize int64
-	readSize := func(path string, file os.FileInfo, err error) error {
-		if !file.IsDir() {
-			dirSize += file.Size()
-		}
-		return nil
-	}
-	filepath.Walk(path, readSize)
-	sizeBytes := float64(dirSize)
-	return sizeBytes
-}
 
 func pathExists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
