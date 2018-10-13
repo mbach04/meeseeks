@@ -1,4 +1,4 @@
-# stunning-octo-garbanzo
+# Meeseeks
 Linux system administration served over RESTful JSON API
 
 
