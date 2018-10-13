@@ -27,7 +27,7 @@ type CommandReturn struct {
 type LsCommandReturn struct {
 	ExitCode int    `json:"exitCode"`
 	BasePath string `json:"basePath"`
-    Files    Files  `json:"files"`
+    Files   []File `json:"files"`
     Count   int     `json:"count"`
     Stderr  string  `json:"stderr"`
 }
@@ -47,10 +47,9 @@ type Files struct {
 type File struct {
 	Name    string           `json:"name"`
 	Bytes   int64            `json:"bytes"`
-	Mode    os.FileMode      `json:"mode"`
     Type    string           `json:"type"`
     ModTime string          `json:"modTime"`
-    Perms   string     `json:"perms"`
+    Perms   string          `json:"perms"`
 }
 
 /* 
@@ -117,10 +116,11 @@ func RunCommand(name string, args ...string) CommandReturn {
 //currently not implemented: [perms, owner]
 func LsCommand(path string) LsCommandReturn {
 	flist, err := ioutil.ReadDir(path)
-	var filesStruct Files
+	// var filesStruct Files
     exitCode := 0
     count := 1
     stdErr := ""
+    lsReturn := new(LsCommandReturn)
 
 	if err != nil {
         log.Println("Error reading path:", path, err)
@@ -150,18 +150,20 @@ func LsCommand(path string) LsCommandReturn {
 			ftype = "namePipe"
         }
 
-		filesStruct.Files = append(filesStruct.Files,
+		lsReturn.Files = append(lsReturn.Files,
 			File{Name: f.Name(),
 				Bytes: f.Size(),
-				Mode:  f.Mode(),
                 Type:  ftype,
                 ModTime: f.ModTime().String(),
                 Perms:  fmt.Sprintf("%04o", f.Mode().Perm()),
             })
         count++
 	}
-
-	return LsCommandReturn{exitCode, path, filesStruct, count, stdErr}
+    lsReturn.ExitCode = exitCode
+    lsReturn.Stderr = stdErr
+    lsReturn.Count = count
+    lsReturn.BasePath = path
+	return *lsReturn
 }
 
 /* 

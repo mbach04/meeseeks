@@ -1,4 +1,4 @@
 ---
-#Config for for stunning-octo-garbanzo
+#Config file for meeseeks
 DEBUG: true
 API_PORT: 9191
