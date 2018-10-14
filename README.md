@@ -5,6 +5,13 @@ Linux system administration served over RESTful JSON API
 ### Compile for Linux 64 Bit
 GOOS=linux GOARCH=amd64 go build -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH meeseeks.go
 
+### Dependent Packages
+```
+ github.com/gorilla/mux
+ github.com/spf13/viper
+ github.com/kabukky/httpscerts
+```
+
 ### Run local (no compile)
 Configure meeseeks.yml with the API port you'd like to use then:
 `go run meeseeks.go`
