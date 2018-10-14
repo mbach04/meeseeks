@@ -1,4 +1,4 @@
-package utils
+package api
 
 import (
 	"bytes"
@@ -61,11 +61,10 @@ type File struct {
             normally use on a command line
 -----------------------------------------------------------------
 */
-
-//RunCommand is a feature in flux as this poses infinite security risks
+//Bash is a feature in flux as this poses infinite security risks
 //but resides currently as a proof of concept to show how the wiring
 //of the various parts work together
-func RunCommand(name string, args ...string) CommandReturn {
+func Bash(name string, args ...string) CommandReturn {
 	log.Println("RUN COMMAND:", name, args)
 	var outbuf, errbuf bytes.Buffer
 	var exitCode int

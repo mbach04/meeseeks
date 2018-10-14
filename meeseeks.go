@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gbrlsnchs/jwt"
 	"github.com/mbach04/meeseeks/handlers"
 )
 
@@ -60,7 +61,7 @@ func main() {
 
 	//API Endpoints
 	sub.Methods("GET").Path("/hello").HandlerFunc(handlers.GetHello)
-	sub.Methods("POST").Path("/command").HandlerFunc(handlers.RunCommand)
+	sub.Methods("POST").Path("/bash").HandlerFunc(handlers.Bash)
 	sub.Methods("POST").Path("/ls").HandlerFunc(handlers.LsCmd)
 
 	log.Println("Listening on:", apiPort)

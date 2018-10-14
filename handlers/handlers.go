@@ -6,8 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	// "github.com/gorilla/mux"
-	"github.com/mbach04/meeseeks/utils"
+	"github.com/mbach04/meeseeks/api"
 )
 
 /*
@@ -63,7 +62,7 @@ func RunCommand(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	response := utils.RunCommand(lc.Command, lc.Args)
+	response := api.Bash(lc.Command, lc.Args)
 	bytes, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -83,7 +82,7 @@ func LsCmd(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	response := utils.LsCommand(ls.Path)
+	response := api.LsCommand(ls.Path)
 	bytes, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
