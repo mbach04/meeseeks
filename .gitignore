@@ -1,1 +1,4 @@
 meeseeks
+certs/
+certs/key.pem
+certs/cert.pem
