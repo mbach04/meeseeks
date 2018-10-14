@@ -51,7 +51,7 @@ func GetHello(w http.ResponseWriter, r *http.Request) {
 }
 
 //RunCommand executes a command on the localhost
-func RunCommand(w http.ResponseWriter, r *http.Request) {
+func Bash(w http.ResponseWriter, r *http.Request) {
 	log.Println("POST: /command:", r.RemoteAddr)
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
