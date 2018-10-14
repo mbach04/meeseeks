@@ -1,26 +1,25 @@
 package main
 
 import (
+	"github.com/gorilla/mux"
+	"github.com/kabukky/httpscerts"
+	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"time"
-	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
-	"github.com/kabukky/httpscerts"
 
 	"github.com/mbach04/meeseeks/handlers"
 )
-
 
 func main() {
 	log.SetFlags(log.LstdFlags)
 	router := mux.NewRouter().StrictSlash(true)
 
 	v1, err := readConfig("meeseeks", map[string]interface{}{
-		"api_port":     8080,
-		"debug": true,
+		"api_port": 8080,
+		"debug":    true,
 		"tls_cert": "cert.pem",
-		"tls_key": "key.pem",
+		"tls_key":  "key.pem",
 	})
 	if err != nil {
 		log.Println("Error reading config file:", err)
@@ -38,15 +37,15 @@ func main() {
 	log.Println("CERT", cert)
 	log.Println("KEY", key)
 
-    // Check if the cert files are available.
-    err = httpscerts.Check(cert, key)
-    // If they are not available, generate new ones.
-    if err != nil {
-        err = httpscerts.Generate(cert, key, "localhost:" + apiPort)
-        if err != nil {
-            log.Fatal("Error: Couldn't create https certs.")
-        }
-    }
+	// Check if the cert files are available.
+	err = httpscerts.Check(cert, key)
+	// If they are not available, generate new ones.
+	if err != nil {
+		err = httpscerts.Generate(cert, key, "localhost:"+apiPort)
+		if err != nil {
+			log.Fatal("Error: Couldn't create https certs.")
+		}
+	}
 
 	srv := &http.Server{
 		Handler: router,

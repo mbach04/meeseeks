@@ -3,29 +3,29 @@ package handlers
 import (
 	"encoding/json"
 	// "os"
-	"net/http"
 	"io/ioutil"
 	"log"
+	"net/http"
 	// "github.com/gorilla/mux"
 	"github.com/mbach04/meeseeks/utils"
 )
 
-/* 
+/*
 -----------------------------------------------------------------
 		Request Structs
 -----------------------------------------------------------------
 */
 
 type LinuxCommand struct {
-	Command	string	`json:"command"`
-	Args	string `json:"args"`
+	Command string `json:"command"`
+	Args    string `json:"args"`
 }
 
 type LsReq struct {
-	Path	string	`json:"path"`
+	Path string `json:"path"`
 }
 
-/* 
+/*
 -----------------------------------------------------------------
 		Response Structs
 -----------------------------------------------------------------
@@ -35,7 +35,7 @@ type ApiResponse struct {
 	Response string `json:"response"`
 }
 
-/* 
+/*
 -----------------------------------------------------------------
 		Handler Funcs
 -----------------------------------------------------------------
@@ -91,9 +91,9 @@ func LsCmd(w http.ResponseWriter, r *http.Request) {
 	writeJsonResponse(w, bytes)
 }
 
-/* 
+/*
 -----------------------------------------------------------------
-		Helper funcs to the handler funcs go here 
+		Helper funcs to the handler funcs go here
 -----------------------------------------------------------------
 */
 
