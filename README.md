@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/mbach04/meeseeks)](https://goreportcard.com/report/github.com/mbach04/meeseeks)
+[![Build Status](https://travis-ci.com/mbach04/meeseeks.svg?branch=master)](https://travis-ci.com/mbach04/meeseeks)
 
 # Meeseeks
 Linux system administration served over RESTful JSON API
