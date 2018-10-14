@@ -111,7 +111,7 @@ func RunCommand(name string, args ...string) CommandReturn {
 }
 
 //LsCommand implements an api abstraction of a standard ls command with the args
-// -lsah on a given path with the following expections:
+// -lsah on a given path with the following exceptions:
 //size is in bytes and let to the caller to format into a human readable context
 //currently not implemented: [perms, owner]
 func LsCommand(path string) LsCommandReturn {

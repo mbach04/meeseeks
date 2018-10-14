@@ -6,8 +6,9 @@ import (
 	"time"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
-	"github.com/mbach04/meeseeks/handlers"
 	"github.com/kabukky/httpscerts"
+
+	"github.com/mbach04/meeseeks/handlers"
 )
 
 
