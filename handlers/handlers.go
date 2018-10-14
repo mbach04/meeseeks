@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	// "github.com/gorilla/mux"
-	"github.com/mbach04/stunning-octo-garbanzo/utils"
+	"github.com/mbach04/meeseeks/utils"
 )
 
 /* 
