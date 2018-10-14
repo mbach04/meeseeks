@@ -4,6 +4,9 @@
 # Meeseeks
 Linux system administration served over RESTful JSON API
 
+### Whats with the name Meeseeks?
+Meeseeks are creatures first introduced in Rick and Morty in the fifth episode of the first season. Meeseeks perform a task, and then are promptly removed from existence. This, is much how I think Linux system administration could be improved. Instead of having large overhead with large numbers of concurrent SSH tunnels or resource waste with agent to master communication setups (ie Puppet) we can streamline tasks with an SSL/TLS based implementation that keeps the connections light and short lived. Most everything these days talk over HTTP(S) and this is an effort to make linux system administration do the same. Much can be said for the flexibility offered by being able to auth to a fleet of linux hosts and then proceed to administer them with something as simple as a curl statement including a json web token Bearer. This opens up the possibilities for the managing system implementation signficantly. You could control a fleet of hosts with nothing more than the Ansible URL module for example.
+
 
 ### Compile for Linux 64 Bit
 `GOOS=linux GOARCH=amd64 go build -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH meeseeks.go`
