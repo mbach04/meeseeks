@@ -81,5 +81,5 @@ func main() {
 	r.Use(middleware.JWTWithConfig(config))
 	r.GET("", restricted)
 
-	e.Logger.Fatal(e.Start(":9191"))
+	e.Logger.Fatal(e.StartTLS(":9191", "certs/cert.pem", "certs/key.pem"))
 }
