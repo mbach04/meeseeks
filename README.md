@@ -9,7 +9,7 @@ Meeseeks are creatures first introduced in Rick and Morty in the fifth episode o
 
 ### Project Kanban Board
 Get a very early idea of where this is headed on the project board or look for ways you can contribute.
-[Meeseeks](https://github.com/mbach04/meeseeks/projects/1)
+[Meeseeks Board](https://github.com/mbach04/meeseeks/projects/1)
 
 
 ### Compile for Linux 64 Bit
