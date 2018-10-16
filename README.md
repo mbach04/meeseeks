@@ -27,7 +27,7 @@ Configure meeseeks.yml with the API port you'd like to use then:
 `curl localhost:1323/restricted -H "Authorization: Bearer ${TOKEN}"`
 
 ### Curl the `ls` endpoint by `POST`ing a path
-`curl -d '{"path": "/home/user"}' localhost:9191/api/v1/ls`
+```curl -k -X POST  https://localhost:9191/api/v1/ls -H "Authorization: Bearer ${TOKEN}" -H 'Content-Type: application/json' -d '{"path": "/Users"}'```  
 
 ### Creating TLS certs for testing purposes
 ```openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem```
