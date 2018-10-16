@@ -1,12 +1,10 @@
 package handlers
 
 import (
-	"encoding/json"
-	// "os"
-	"io/ioutil"
+	"github.com/labstack/echo"
+	"github.com/mbach04/meeseeks/api"
 	"log"
 	"net/http"
-	"github.com/mbach04/meeseeks/api"
 )
 
 /*
@@ -30,8 +28,8 @@ type LsReq struct {
 -----------------------------------------------------------------
 */
 type ApiResponse struct {
-	Request  string `json:"request"`
-	Response string `json:"response"`
+	Request  string              `json:"request"`
+	Response api.LsCommandReturn `json:"response"`
 }
 
 /*
@@ -40,63 +38,17 @@ type ApiResponse struct {
 -----------------------------------------------------------------
 */
 
-//GetHello returns a simple `hello world` string as the `response` json key
-func GetHello(w http.ResponseWriter, r *http.Request) {
-	response := ApiResponse{Response: "Hello World"}
-	bytes, err := json.Marshal(response)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	writeJsonResponse(w, bytes)
-}
 
-//RunCommand executes a command on the localhost
-func RunCommand(w http.ResponseWriter, r *http.Request) {
-	log.Println("POST: /command:", r.RemoteAddr)
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+//LsCommand runs an `ls` on the provided `path`
+func LsCmd(c echo.Context) (err error) {
+	p := new(LsReq)
+	if err = c.Bind(p); err != nil {
+		log.Println("ERROR", err)
+		return
 	}
-	lc := new(LinuxCommand)
-	err = json.Unmarshal(body, lc)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	r := &ApiResponse{
+		Request:  "ls " + p.Path,
+		Response: api.LsCommand(p.Path),
 	}
-	response := api.Bash(lc.Command, lc.Args)
-	bytes, err := json.Marshal(response)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	writeJsonResponse(w, bytes)
-}
-
-//RunCommand executes a command on the localhost
-func LsCmd(w http.ResponseWriter, r *http.Request) {
-	log.Println("POST: /ls:", r.RemoteAddr)
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	ls := new(LsReq)
-	err = json.Unmarshal(body, ls)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	response := api.LsCommand(ls.Path)
-	bytes, err := json.Marshal(response)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	writeJsonResponse(w, bytes)
-}
-
-/*
------------------------------------------------------------------
-		Helper funcs to the handler funcs go here
------------------------------------------------------------------
-*/
-
-func writeJsonResponse(w http.ResponseWriter, bytes []byte) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Write(bytes)
+	return c.JSONPretty(http.StatusOK, r, "  ")
 }
