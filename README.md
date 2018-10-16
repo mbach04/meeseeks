@@ -31,6 +31,6 @@ Configure meeseeks.yml with the API port you'd like to use then:
 
 ### Creating TLS certs for testing purposes
 ```openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem```
-Reference the location of `cert.pem` and `key.pem` in your `meeseeks.yml` config file.
+Reference the location of `cert.pem` and `key.pem` in your `meeseeks.yml` config file.  
 Or use Go's built in crypto package to create certs:
 `go run $GOROOT/src/crypto/tls/generate_cert.go --host localhost`
