@@ -11,7 +11,6 @@ Meeseeks are creatures first introduced in Rick and Morty in the fifth episode o
 Get a very early idea of where this is headed on the project board or look for ways you can contribute.
 [Meeseeks Board](https://github.com/mbach04/meeseeks/projects/1)
 
-
 ### Compile for Linux 64 Bit
 `GOOS=linux GOARCH=amd64 go build -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH meeseeks.go`
 
@@ -26,8 +25,12 @@ Get a very early idea of where this is headed on the project board or look for w
 Configure meeseeks.yml with the API port you'd like to use then:
 `go run meeseeks.go`
 
+### Login to the server and test a secure endpoint
+`export TOKEN=$(curl -k -X POST -d 'username=admin' -d 'password=secret' https://localhost:9191/login | jq -r ".token")`  
+`curl localhost:1323/restricted -H "Authorization: Bearer ${TOKEN}"`
+
 ### Curl the `ls` endpoint by `POST`ing a path
-`curl -d '{"path": "/home/user"}' localhost:9191/api/v1/ls`
+```curl -k -X POST  https://localhost:9191/api/v1/ls -H "Authorization: Bearer ${TOKEN}" -H 'Content-Type: application/json' -d '{"path": "/Users"}'```  
 
 ### Creating TLS certs for testing purposes
 ```openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem```
