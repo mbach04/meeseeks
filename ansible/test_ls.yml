@@ -1,0 +1,63 @@
+---
+- name: Test the LS endpoint
+  hosts: meeseeks
+  become: no
+  tasks:
+    - name: login and grab the auth token
+      uri:
+        url: "{{ login_endpoint }}"
+        method: POST
+        body: "username={{ test_user }}&password={{ test_pass }}"
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+      register: login
+
+    - name: Store the token
+      set_fact:
+        token: "{{ login.json.token }}"
+
+    - name: Test the list endpoint with a path that is accessible on the host
+      uri:
+        url: "{{ ls_endpoint }}"
+        method: POST
+        body:
+          path: "{{ ls_tests.pass }}"
+        body_format: json
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ token }}"
+      register: cmd
+      failed_when: cmd.json.response.exitCode != 0
+
+    - name: Test the list endpoint with a path that is not accessible on the host
+      uri:
+        url: "{{ ls_endpoint }}"
+        method: POST
+        body:
+          path: "{{ ls_tests.fail }}"
+        body_format: json
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ token }}"
+      register: cmd
+      failed_when: cmd.json.response.exitCode == 0
+
+    - name: Test the list endpoint with a path that is accessible on the host
+      uri:
+        url: "{{ ls_endpoint }}"
+        method: POST
+        body:
+          path: "{{ ls_tests.fail2 }}"
+        body_format: json
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ token }}"
+      register: cmd
+      failed_when: cmd.json.response.exitCode == 0

@@ -69,8 +69,6 @@ func restricted(c echo.Context) error {
 
 func main() {
 	log.SetFlags(log.LstdFlags)
-	// router := mux.NewRouter().StrictSlash(true)
-
 
 	v1, err := readConfig("meeseeks", map[string]interface{}{
 		"api_port": 8080,

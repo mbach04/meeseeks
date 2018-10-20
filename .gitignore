@@ -5,3 +5,4 @@ certs/cert.pem
 cert.pem
 key.pem
 gin-bin
+.key

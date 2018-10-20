@@ -1,0 +1,2 @@
+[meeseeks]
+localhost ansible_connection=local
