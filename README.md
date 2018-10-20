@@ -16,7 +16,9 @@ Get a very early idea of where this is headed on the project board or look for w
 
 ### Dependent Packages
 ```
- github.com/gorilla/mux
+	github.com/dgrijalva/jwt-go
+	github.com/labstack/echo"
+	github.com/labstack/echo/middleware
  github.com/spf13/viper
  github.com/kabukky/httpscerts
 ```
