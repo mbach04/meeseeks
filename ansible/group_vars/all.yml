@@ -1,0 +1,43 @@
+---
+# Vars that aren't normally in the meeseeks runtime yml file (meeseeks.yml from the root of this proj)
+# Mostly vars that are unique to your machine or required for the tests
+test_user: admin
+test_pass: secret
+ansible_user: matthewbach
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+
+server_ip: localhost
+api_ver: /api/v1
+base_url: "https://{{ server_ip }}:{{ API_PORT }}{{ api_ver }}"
+
+login_endpoint: "https://{{ server_ip }}:{{ API_PORT }}/login"
+
+
+# ------------- Test various users against the login endpoint
+good_user:
+  username: admin
+  password: secret
+
+bad_user:
+  username: random
+  password: somethingrandom
+
+bad_user2:
+  username: "{{ test_user }}"
+  password: nottherightpassword
+
+bad_user3:
+  username: random
+  password: "{{ test_pass }}"
+
+
+
+# ------------- Settings and tests for the /api/v1/ls endpoint
+ls_endpoint: "{{ base_url }}/ls"
+
+# test data
+ls_tests:
+  pass: "/Users/go"     # a pass case
+  fail: "Users/go/src"  # a fail case
+  fail2: "../../../"    # something nefarious

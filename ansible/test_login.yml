@@ -1,0 +1,26 @@
+---
+- name: Test the login endpoint
+  hosts: meeseeks
+  become: no
+  tasks:
+    - name: login and grab the auth token with good user
+      uri:
+        url: "{{ login_endpoint }}"
+        method: POST
+        body: "username={{ good_user.username }}&password={{ good_user.password }}"
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+      register: login
+      failed_when: login.json.token == ""
+
+    - name: login and grab the auth token with bad user
+      uri:
+        url: "{{ login_endpoint }}"
+        method: POST
+        body: "username={{ bad_user.username }}&password={{ bad_user.password }}"
+        return_content: yes
+        status_code: 200
+        validate_certs: no
+      register: login
+      failed_when: login.json.message != "Unauthorized" or login.status != 401

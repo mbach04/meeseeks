@@ -37,3 +37,10 @@ Configure meeseeks.yml with the API port you'd like to use then:
 Reference the location of `cert.pem` and `key.pem` in your `meeseeks.yml` config file.  
 Or use Go's built in crypto package to create certs:
 `go run $GOROOT/src/crypto/tls/generate_cert.go --host localhost`
+
+## Running the Ansible test suite  
+From the root of the project:
+```bash
+go run meeseeks.go
+./test.sh
+```
