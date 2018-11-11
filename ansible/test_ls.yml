@@ -60,4 +60,4 @@
         headers:
           Authorization: "Bearer {{ token }}"
       register: cmd
-      failed_when: cmd.json.response.exitCode == 0
+      failed_when: cmd.json.response.exitCode != 0

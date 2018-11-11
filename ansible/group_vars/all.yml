@@ -38,6 +38,6 @@ ls_endpoint: "{{ base_url }}/ls"
 
 # test data
 ls_tests:
-  pass: "/Users/go"     # a pass case
+  pass: "/etc/"     # a pass case
   fail: "Users/go/src"  # a fail case
-  fail2: "../../../"    # something nefarious
+  fail2: "../../" # something nefarious
