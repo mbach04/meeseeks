@@ -1,6 +1,8 @@
 ---
 #Config file for meeseeks
 DEBUG: true
+HOSTNAME: localhost
 API_PORT: 9191
 TLS_CERT: certs/cert.pem
 TLS_KEY: certs/key.pem
+
